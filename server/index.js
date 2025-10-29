@@ -50,8 +50,20 @@ app.use('/uploads', (req, res, next) => {
   next();
 }, express.static(uploadsDir));
 
+// Serve static frontend files from parent directory
+const frontendDir = path.join(__dirname, '..');
+app.use(express.static(frontendDir, {
+  extensions: ['html'],
+  index: 'loginfinal.html'
+}));
+
 // Health endpoint for quick checks from clients or load balancers
 app.get('/health', (req, res) => res.json({ ok: true, ts: Date.now() }));
+
+// Root redirect to login page
+app.get('/', (req, res) => {
+  res.sendFile(path.join(frontendDir, 'loginfinal.html'));
+});
 
 // ensure preflight requests are handled
 app.options('*', cors());
