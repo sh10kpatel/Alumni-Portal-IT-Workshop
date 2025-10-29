@@ -4,12 +4,13 @@ const dotenv = require('dotenv');
 dotenv.config();
 (async ()=>{
   try{
-    const host = process.env.DB_HOST || 'localhost';
-    const user = process.env.DB_USER || 'root';
-    const password = process.env.DB_PASSWORD || '';
-    const db = process.env.DB_NAME || 'alumni_db';
-    console.log('Connecting to MySQL at', host, 'user', user);
-    const conn = await mysql.createConnection({ host, user, password });
+    const host = process.env.MYSQLHOST || process.env.DB_HOST || 'localhost';
+    const user = process.env.MYSQLUSER || process.env.DB_USER || 'root';
+    const password = process.env.MYSQLPASSWORD || process.env.DB_PASSWORD || '';
+    const db = process.env.MYSQLDATABASE || process.env.DB_NAME || 'alumni_db';
+    const port = Number(process.env.MYSQLPORT || process.env.DB_PORT || 3306);
+    console.log('Connecting to MySQL at', host, 'user', user, 'port', port);
+    const conn = await mysql.createConnection({ host, port, user, password });
     const [dbs] = await conn.query('SHOW DATABASES');
     console.log('Databases:', dbs.map(d=>d.Database).join(', '));
     try{
