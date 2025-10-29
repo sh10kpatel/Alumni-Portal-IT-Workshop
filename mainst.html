@@ -372,8 +372,10 @@
     applyFilters();
   });
 
-  // API settings
-  let API_BASE = 'http://127.0.0.1:4000';
+  // Auto-detect API base: use same origin if served from a server, otherwise localhost
+  let API_BASE = window.location.protocol === 'file:' 
+      ? 'http://127.0.0.1:4000' 
+      : window.location.origin;
   const params = new URLSearchParams(window.location.search);
   const explicitBase = params.get('apiBase');
   if (explicitBase) {

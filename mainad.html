@@ -397,7 +397,10 @@
     applyFilters();
   });
 
-  let API_BASE = 'http://localhost:4000';
+  // Auto-detect API base: use same origin if served from a server, otherwise localhost
+  let API_BASE = window.location.protocol === 'file:' 
+      ? 'http://localhost:4000' 
+      : window.location.origin;
   const params = new URLSearchParams(window.location.search);
   const explicitBase = params.get('apiBase');
   const portParam = params.get('apiPort');
