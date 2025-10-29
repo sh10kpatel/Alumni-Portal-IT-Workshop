@@ -1,7 +1,12 @@
 {
   "name": "alumni-server",
   "version": "1.0.0",
+  "description": "Alumni Portal API - Express server with MySQL/SQLite support",
   "private": true,
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
   "scripts": {
     "start": "node index.js",
     "dev": "node index.js"
